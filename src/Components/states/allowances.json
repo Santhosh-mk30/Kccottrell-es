@@ -1,0 +1,42 @@
+{
+  "Managing Director/Director/COO/CFO": {
+    "Tier 1  ('A' Area)": { "accommodation": "Actual", "daily": 2200,"sight":"Actual" },
+    "Tier 2 ('B' Area)": { "accommodation": "Actual", "daily": 2000,"sight":"Actual" },
+    "Tier 3 ('C' Area)": { "accommodation": "Actual", "daily": 1800,"sight":"Actual"}
+  },
+  "Assistant VicePresident (AVP)/VicePresident (VP)/SeniorVicePresident (Sr.VP)": {
+    "Tier 1  ('A' Area)": { "accommodation": "Actual", "daily": 1700},
+    "Tier 2 ('B' Area)": { "accommodation": "Actual", "daily": 1550},
+    "Tier 3 ('C' Area)": { "accommodation": "Actual", "daily": 1400}
+  },
+  "General Manager/Sr.General Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 4500, "daily": 1200,"sight":21000 },
+    "Tier 2 ('B' Area)": { "accommodation": 3500, "daily": 1100,"sight":18000 },
+    "Tier 3 ('C' Area)": { "accommodation": 2500, "daily": 1000,"sight":15000 }
+  },
+  "Assistant/Deputy General Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 4500, "daily": 1200,"sight":21000 },
+    "Tier 2 ('B' Area)": { "accommodation": 3500, "daily": 1100,"sight":18000 },
+    "Tier 3 ('C' Area)": { "accommodation": 2500, "daily": 1000,"sight":15000 }
+  },
+  "Manager/Sr.Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000 }
+  },
+  "Assistant/Deputy Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":18000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":15000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":12000 }
+  },
+  "Engineer/Designer/Officer/Executive": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000 }
+  },
+  "UGTrainee/Graduate Trainee/PGTrainee": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000 }
+  }
+}

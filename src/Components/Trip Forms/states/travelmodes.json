@@ -1,0 +1,27 @@
+{
+  "Managing Director/Director/COO/CFO/Assistant Vice President/Vice President/Senior Vice President": {
+    "Air": "Economy class",
+    "Train": "1st AC class",
+    "Bus/Taxi/Car": "Actual"
+  },
+  "General Manager/Sr.General Manager": {
+    "Air": "Economy class",
+    "Train": "2nd AC class",
+    "Bus/Taxi/Car": "Actual"
+  },
+  "Assistant General Manager/Deputy General Manager": {
+    "Air": "Economy class",
+    "Train": "2nd AC class",
+    "Bus/Taxi/Car": "Actual"
+  },
+  "Manager/Sr. Manager/Assistant Manager/Deputy Manager": {
+    "Air": "*",
+    "Train": "2nd AC class",
+    "Bus/Taxi/Car": "Actual"
+  },
+  "Sr. Engineer/Sr. Designer/Sr. Officer/Sr. Executive/Engineer/Designer/Officer/Executive/UG Trainer/PG Trainer": {
+    "Air": "*",
+    "Train": "3rd AC class",
+    "Bus/Taxi/Car": "Actual"
+  }
+}

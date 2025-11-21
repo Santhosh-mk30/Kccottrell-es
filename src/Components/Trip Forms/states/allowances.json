@@ -1,0 +1,227 @@
+{
+  "DIRECTOR": {
+    "Tier 1  ('A' Area)": { "accommodation": "Actual", "daily": 2200,"sight":"Actual" },
+    "Tier 2 ('B' Area)": { "accommodation": "Actual", "daily": 2000,"sight":"Actual" },
+    "Tier 3 ('C' Area)": { "accommodation": "Actual", "daily": 1800,"sight":"Actual"}
+  },
+  "Engineering Director": {
+    "Tier 1  ('A' Area)": { "accommodation": "Actual", "daily": 2200,"sight":"Actual" },
+    "Tier 2 ('B' Area)": { "accommodation": "Actual", "daily": 2000,"sight":"Actual" },
+    "Tier 3 ('C' Area)": { "accommodation": "Actual", "daily": 1800,"sight":"Actual"}
+  },
+  "Assistant VicePresident (AVP)/VicePresident (VP)/SeniorVicePresident (Sr.VP)": {
+    "Tier 1  ('A' Area)": { "accommodation": "Actual", "daily": 1700},
+    "Tier 2 ('B' Area)": { "accommodation": "Actual", "daily": 1550},
+    "Tier 3 ('C' Area)": { "accommodation": "Actual", "daily": 1400}
+  },
+  "General Manager - Procurement": {
+    "Tier 1  ('A' Area)": { "accommodation": 4500, "daily": 1200,"sight":21000,"sightaccommodation":15000},
+    "Tier 2 ('B' Area)": { "accommodation": 3500, "daily": 1100,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 2500, "daily": 1000,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Sr.General Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 4500, "daily": 1200,"sight":21000,"sightaccommodation":15000},
+    "Tier 2 ('B' Area)": { "accommodation": 3500, "daily": 1100,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 2500, "daily": 1000,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Additional General Manager - Operations": {
+    "Tier 1  ('A' Area)": { "accommodation": 4500, "daily": 1200,"sight":21000,"sightaccommodation":15000},
+    "Tier 2 ('B' Area)": { "accommodation": 3500, "daily": 1100,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 2500, "daily": 1000,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Deputy General Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 4500, "daily": 1200,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 3500, "daily": 1100,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 2500, "daily": 1000,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Sr. Manager - Engineering": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Manager - Proposals & Field Support": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Manager - Proposals": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+   "Manager - Operations": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+   "Manager - Site Services": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+   "Sr. Manager - Quality": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Manager - Engineering": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Manager - HR & Admin": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Sr. Manager - Finance": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":21000,"sightaccommodation":15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":18000,"sightaccommodation":12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":15000,"sightaccommodation":10000 }
+  },
+  "Assistant Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":18000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":7000 }
+  },
+  "Deputy Manager": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":18000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":7000 }
+  },
+   "DEPUTY MANAGER - SITE SERVICES": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":18000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":7000 }
+  },
+   "Assistant Manager - Project Engineering": {
+    "Tier 1  ('A' Area)": { "accommodation": 3500, "daily": 900,"sight":18000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":7000 }
+  },
+  "Engineer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+  "Officer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Senior Executive - Finance": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Senoir Designer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Senior Engineer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "SR. Designer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Senior Engineer - E&I": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Engineer - Proposals": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "3D DESIGNER": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Sr. Procurement Officer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  }, 
+  "Engineer-Operations": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "EXECUTIVE": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Sr. Executive - IT": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Design Engineer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Engineer - Engineering": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Executive": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Facility Management - Admin": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Senior Engineer –Safety & Site Services": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Designer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+  "UGTrainee/Graduate Trainee/PGTrainee": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Jr. Engineer - Process": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Jr. Engineer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "Consultant": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  },
+   "JR Engineer": {
+    "Tier 1  ('A' Area)": { "accommodation": 2500, "daily": 800,"sight":15000,"sightaccommodation":10000 },
+    "Tier 2 ('B' Area)": { "accommodation": 1500, "daily": 700,"sight":12000,"sightaccommodation":9000 },
+    "Tier 3 ('C' Area)": { "accommodation": 1000, "daily": 600,"sight":9000,"sightaccommodation":7000 }
+  }
+}

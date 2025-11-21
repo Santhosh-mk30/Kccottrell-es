@@ -1,0 +1,22 @@
+{
+  "General Manager/Sr.General Manager/AVP/VP/Sr.VP": {
+    "Tier 1 ('A' Area)": { "accommodation": "Actual" },
+    "Tier 2 ('B' Area)": { "accommodation": "Actual" },
+    "Tier 3 ('C' Area)": { "accommodation": "Actual" }
+  },
+  "Sr. Manager/Assistant GM/Deputy GM/Addl. GM": {
+    "Tier 1 ('A' Area)": { "accommodation": 21000 },
+    "Tier 2 ('B' Area)": { "accommodation": 18000 },
+    "Tier 3 ('C' Area)": { "accommodation": 15000 }
+  },
+  "Assistant/Deputy Manager/Manager": {
+    "Tier 1 ('A' Area)": { "accommodation": 18000 },
+    "Tier 2 ('B' Area)": { "accommodation": 15000 },
+    "Tier 3 ('C' Area)": { "accommodation": 12000 }
+  },
+  "UG/GET/PG Trainee/Executive/Designer/Officer/Sr.Designer/Sr.Engineer/Sr.Executive/Sr.Officer": {
+    "Tier 1 ('A' Area)": { "accommodation": 15000 },
+    "Tier 2 ('B' Area)": { "accommodation": 12000 },
+    "Tier 3 ('C' Area)": { "accommodation": 9000 }
+  }
+}

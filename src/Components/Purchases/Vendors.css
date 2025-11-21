@@ -1,0 +1,185 @@
+/* Container */
+.vendor-form {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.vendor-form h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Input styles */
+.vendor-form input,
+.vendor-form select,
+.vendor-form button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.vendor-form input:focus,
+.vendor-form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.form-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 1000px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-row select,
+.form-row input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin-top: 10%;
+}
+
+
+
+
+
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-header {
+  width: 200px; /* adjust as needed */
+  margin: 0;
+  font-size: 1.0rem;
+}
+.address-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap; /* Allow stacking on small screens */
+  margin-bottom: 20px;
+}
+.full-width {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+
+/* Checkbox + label */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* Button */
+.vendor-form button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  transition: background 0.3s;
+}
+
+.vendor-form button:hover {
+  background: #0056b3;
+}
+
+
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #fbfbfd;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px;
+  background: #0a5f03;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tabs button.active {
+  background: #fff;
+  border-bottom: 3px solid #007bff;
+  color: #007bff;
+}
+
+.tab-content {
+  padding: 10px 0;
+}
+
+/* Inputs */
+.full-width {
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+
+
+/* 📱 Mobile Responsive */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .vendor-form {
+    padding: 15px;
+  }
+
+  .vendor-form h2 {
+    font-size: 18px;
+  }
+
+  .vendor-form input,
+  .vendor-form select,
+  .vendor-form button {
+    font-size: 13px;
+  }
+
+   .tabs {
+    flex-direction: column;
+  }
+  .tabs button {
+    text-align: left;
+  }
+}

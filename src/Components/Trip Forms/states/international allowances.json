@@ -1,0 +1,22 @@
+{
+  "MD": {
+    "A": { "accommodation": "Actual (250)", "daily": 90, "total": "Actual (340)" },
+    "B": { "accommodation": "Actual (200)", "daily": 80 }
+  },
+  "Director/HOD": {
+    "A": { "accommodation": "Actual (150)", "daily": 80, "total": "Actual (230)" },
+    "B": { "accommodation": "Actual (120)", "daily": 70 }
+  },
+  "DGM/GM": {
+    "A": { "accommodation": 125, "daily": 65, "total": 165 },
+    "B": { "accommodation": 85, "daily": 55 }
+  },
+  "Manager": {
+    "A": { "accommodation": 90, "daily": 60, "total": 150 },
+    "B": { "accommodation": 75, "daily": 45 }
+  },
+  "Executive/Trainee": {
+    "A": { "accommodation": 80, "daily": 50, "total": 130 },
+    "B": { "accommodation": 65, "daily": 35 }
+  }
+}
