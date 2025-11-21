@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 /* =============================================================
-   3D SILO SHAPE MODEL
+   3D SILO SHAPE MODEL (INLINE CSS)
    ============================================================= */
 function Silo3D({ topDia = 2, Hh = 1, Hc = 2 }) {
   const cylHeight = Hc * 40;
@@ -43,59 +43,43 @@ function Silo3D({ topDia = 2, Hh = 1, Hc = 2 }) {
 }
 
 /* =============================================================
-   SILO CARD
+   CARD 1  SILO CALCULATOR
    ============================================================= */
-function SiloCard({ autoVolume }) {
+function SiloCard() {
   const [inputs, setInputs] = useState({
     totalVolume: "",
+    topDia: "",
+    bottomDia: "",
     reposeAngle: "",
     valleyAngle: "60",
   });
 
   const [results, setResults] = useState(null);
 
-  // auto set from FlowCard (rounded volume)
-  useEffect(() => {
-    if (autoVolume !== null) {
-      setInputs((p) => ({ ...p, totalVolume: autoVolume }));
-    }
-  }, [autoVolume]);
+  const handleChange = (e) =>
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
 
   const calculate = () => {
     const Vt = parseFloat(inputs.totalVolume);
-    const D2 = 0.4; // CONSTANT bottom dia
+    const D1 = parseFloat(inputs.topDia);
+    const D2 = parseFloat(inputs.bottomDia);
     const alpha = parseFloat(inputs.reposeAngle) * (Math.PI / 180);
     const theta = parseFloat(inputs.valleyAngle) * (Math.PI / 180);
 
-    let D1 = 2; // initial guess for top dia
-    let ratio = 0;
-    let Hh, hopperVol, reposeHeight, reposeVol, cylVolNeeded, Hc, totalHeight;
+    const Hh = (D1 - D2) / (2 * Math.tan(theta / 2));
+    const hopperVol =
+      (Math.PI * Hh * (D1 * D1 + D1 * D2 + D2 * D2)) / 12;
 
-    // iterate until ratio matches approx 2
-    for (let i = 0; i < 30; i++) {
-      Hh = (D1 - D2) / (2 * Math.tan(theta / 2));
-      hopperVol =
-        (Math.PI * Hh * (D1 * D1 + D1 * D2 + D2 * D2)) / 12;
+    const reposeHeight = (D1 / 2) * Math.tan(alpha);
+    const reposeVol =
+      (1 / 3) * Math.PI * (D1 / 2) ** 2 * reposeHeight;
 
-      reposeHeight = (D1 / 2) * Math.tan(alpha);
-      reposeVol =
-        (1 / 3) * Math.PI * (D1 / 2) ** 2 * reposeHeight;
+    const cylVolNeeded = Vt - (hopperVol + reposeVol);
+    const Hc =
+      cylVolNeeded / (Math.PI * (D1 / 2) ** 2);
 
-      cylVolNeeded = Vt - (hopperVol + reposeVol);
-
-      Hc = cylVolNeeded / (Math.PI * (D1 / 2) ** 2);
-      totalHeight = Hh + Hc + reposeHeight;
-
-      ratio = totalHeight / D1;
-
-      if (ratio > 2) {
-        D1 += 0.1;
-      } else if (ratio < 2) {
-        D1 -= 0.1;
-      }
-
-      D1 = Math.max(D1, 0.5); // avoid negative
-    }
+    const totalHeight = Hh + Hc + reposeHeight;
+    const ratio = totalHeight / D1;
 
     setResults({
       hopperVol,
@@ -107,8 +91,6 @@ function SiloCard({ autoVolume }) {
       reposeHeight,
       totalHeight,
       ratio,
-      topDia: D1,
-      bottomDia: D2,
     });
   };
 
@@ -124,104 +106,91 @@ function SiloCard({ autoVolume }) {
         border: "1px solid #ccc",
       }}
     >
-      <h2>Silo</h2>
+      <h2 style={{ fontSize: "22px", marginBottom: "10px" }}>Silo</h2>
 
-      <input
-        name="totalVolume"
-        value={inputs.totalVolume}
-        placeholder="TOTAL VOLUME"
-        readOnly
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "10px",
-          borderRadius: "10px",
-          border: "1px solid #aaa",
-          background: "#f0f0f0",
-        }}
-      />
-
-      <input
-        name="reposeAngle"
-        value={inputs.reposeAngle}
-        onChange={(e) =>
-          setInputs({ ...inputs, reposeAngle: e.target.value })
-        }
-        placeholder="REPOSE ANGLE"
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "10px",
-          borderRadius: "10px",
-          border: "1px solid #aaa",
-        }}
-      />
+      {Object.keys(inputs).map((key) => (
+        <input
+          key={key}
+          name={key}
+          value={inputs[key]}
+          onChange={handleChange}
+          placeholder={key.toUpperCase()}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "10px",
+            borderRadius: "10px",
+            border: "1px solid #aaa",
+            background: "#f9f9f9",
+            fontSize: "15px",
+          }}
+        />
+      ))}
 
       <button
         onClick={calculate}
         style={{
           width: "100%",
           padding: "12px",
-          background: "linear-gradient(to right,#1e88e5,#3949ab)",
-          color: "#fff",
-          border: "none",
+          background: "linear-gradient(to right, #1e88e5, #3949ab)",
           borderRadius: "10px",
+          border: "none",
+          color: "#fff",
+          fontSize: "16px",
           marginBottom: "10px",
+          cursor: "pointer",
         }}
       >
         Calculate
       </button>
 
+      <Silo3D
+        topDia={parseFloat(inputs.topDia) || 2}
+        Hh={results?.Hh || 1}
+        Hc={results?.Hc || 2}
+      />
+
       {results && (
-        <>
-          <Silo3D
-            topDia={results.topDia}
-            Hh={results.Hh}
-            Hc={results.Hc}
-          />
+        <div
+          style={{
+            marginTop: "10px",
+            padding: "15px",
+            background: "#fafafa",
+            borderRadius: "12px",
+            border: "1px solid #ddd",
+          }}
+        >
+          <h3>📌 Silo Results</h3>
 
-          <div
-            style={{
-              marginTop: "10px",
-              padding: "15px",
-              background: "#fafafa",
-              borderRadius: "12px",
-              border: "1px solid #ddd",
-            }}
-          >
-            <h3>Silo Results</h3>
-            <p>Top Dia: {results.topDia.toFixed(3)} m</p>
-            <p>Bottom Dia: {results.bottomDia} m</p>
-            <p>Hopper Height: {results.Hh.toFixed(3)} m</p>
-            <p>Repose Height: {results.reposeHeight.toFixed(3)} m</p>
-            <p>Cylinder Height: {results.Hc.toFixed(3)} m</p>
-            <p>Total Height: {results.totalHeight.toFixed(3)} m</p>
-            <p>Ratio H/D: {results.ratio.toFixed(3)}</p>
+          <p>Hopper Height: {results.Hh.toFixed(3)} m</p>
+          <p>Hopper Volume: {results.hopperVol.toFixed(3)} m³</p>
+          <p>Repose Height: {results.reposeHeight.toFixed(3)} m</p>
+          <p>Repose Volume: {results.reposeVol.toFixed(3)} m³</p>
+          <p>Cylinder Height: {results.Hc.toFixed(3)} m</p>
+          <p>Cylinder Volume: {results.cylVolNeeded.toFixed(3)} m³</p>
 
-            <p
-              style={{
-                color:
-                  Math.abs(results.ratio - 2) < 0.05
-                    ? "green"
-                    : "red",
-                fontWeight: "bold",
-              }}
-            >
-              {Math.abs(results.ratio - 2) < 0.05
-                ? "✅ Ratio OK"
-                : "⚠️ Ratio Not OK"}
+          <hr style={{ margin: "12px 0" }} />
+
+          <p><b>Total Height:</b> {results.totalHeight.toFixed(3)} m</p>
+          <p><b>Height / TopDia:</b> {results.ratio.toFixed(3)}</p>
+
+          {results.ratio < 1.5 || results.ratio > 2 ? (
+            <p style={{ color: "red", fontWeight: "bold" }}>
+               ⚠️ Ratio Out of Range (1.5 - 2 Required)
             </p>
-          </div>
-        </>
+          ) : (
+            <p style={{ color: "green", fontWeight: "bold" }}>✅ Ratio OK</p>
+          )}
+        </div>
       )}
     </div>
   );
 }
 
 /* =============================================================
-   FLOW CARD
+   CARD 2  FLOW CALCULATOR
    ============================================================= */
-function FlowCard({ setVolume }) {
+function FlowCard() {
   const [inputs, setInputs] = useState({
     flow: "",
     idc: "",
@@ -249,9 +218,6 @@ function FlowCard({ setVolume }) {
     let F6 = F5 * storage;
 
     setExtra({ F1, F2, F3, F4, F5, F6 });
-
-    // ⬇️ Rounded volume set to SiloCard
-    setVolume(Math.round(F6));
   };
 
   return (
@@ -266,7 +232,7 @@ function FlowCard({ setVolume }) {
         border: "1px solid #ccc",
       }}
     >
-      <h2>Flow</h2>
+      <h2 style={{ fontSize: "22px", marginBottom: "10px" }}>Flow</h2>
 
       {Object.keys(inputs).map((key) => (
         <input
@@ -281,6 +247,8 @@ function FlowCard({ setVolume }) {
             marginBottom: "10px",
             borderRadius: "10px",
             border: "1px solid #aaa",
+            background: "#f9f9f9",
+            fontSize: "15px",
           }}
         />
       ))}
@@ -290,10 +258,12 @@ function FlowCard({ setVolume }) {
         style={{
           width: "100%",
           padding: "12px",
-          background: "linear-gradient(to right,#ff7043,#d84315)",
-          color: "#fff",
-          border: "none",
+          background: "linear-gradient(to right, #ff7043, #d84315)",
           borderRadius: "10px",
+          border: "none",
+          color: "#fff",
+          fontSize: "16px",
+          cursor: "pointer",
         }}
       >
         Calculate
@@ -309,9 +279,14 @@ function FlowCard({ setVolume }) {
             border: "1px solid #ddd",
           }}
         >
-          <h3>Flow Results</h3>
+          <h3>Flow Outputs</h3>
+
+          <p>Flow per Sec = {extra.F1.toFixed(3)} Am³/Sec</p>
+          <p>Flow per Gm = {extra.F2.toFixed(3)} Gm/Sec</p>
+          <p>Flow per Kg = {extra.F3.toFixed(3)} Kg/Sec</p>
+          <p>Flow Kg/Hr = {extra.F4.toFixed(3)} Kg/Hr</p>
+          <p>Flow m³/Hr = {extra.F5.toFixed(3)} m³/Hr</p>
           <p>Volume = {extra.F6.toFixed(3)} m³</p>
-          <p>Rounded → {Math.round(extra.F6)} m³</p>
         </div>
       )}
     </div>
@@ -319,11 +294,9 @@ function FlowCard({ setVolume }) {
 }
 
 /* =============================================================
-   MAIN PAGE
+   FINAL PAGE â€” TWO CARDS TOGETHER
    ============================================================= */
 export default function SiloFlowPage() {
-  const [volumeValue, setVolumeValue] = useState(null);
-
   return (
     <div
       style={{
@@ -335,8 +308,8 @@ export default function SiloFlowPage() {
       }}
     >
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        <FlowCard setVolume={setVolumeValue} />
-        <SiloCard autoVolume={volumeValue} />
+        <SiloCard />
+        <FlowCard />
       </div>
     </div>
   );
