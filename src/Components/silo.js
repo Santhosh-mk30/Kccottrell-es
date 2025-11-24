@@ -6,7 +6,7 @@ import React, { useState, useRef } from "react";
 function Silo3D({ topDia = 2, Hh = 1, Hc = 2 }) {
   const cylHeight = Hc * 85;
   const coneHeight = Hh * 85;
-  const cylWidth = topDia * 38;
+  const cylWidth = topDia * 128;
 
   return (
     <div style={{ textAlign: "center", marginTop: "10px" }}>
@@ -659,4 +659,5 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
     </div>
   );
 }
+
 
