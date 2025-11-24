@@ -287,10 +287,15 @@ export default function SiloFlowPage() {
 
   setFlowResults({ F1, F2, F3, F4, F5, F6 });
 };
+
+
+/* ============================================================
+   SILO CALCULATION — WITH EMPTY VOLUME
+============================================================ */
 const calculateSilo = () => {
-  const Vt = parseFloat(siloInputs.totalVolume);   // total volume
-  const D2 = parseFloat(siloInputs.bottomDia);     // bottom diameter
-  const ratio = parseFloat(siloInputs.ratio);      // L/D ratio
+  const Vt = parseFloat(siloInputs.totalVolume);
+  const D2 = parseFloat(siloInputs.bottomDia);
+  const ratio = parseFloat(siloInputs.ratio);
 
   const alpha = parseFloat(siloInputs.reposeAngle) * Math.PI / 180;
   const theta = parseFloat(siloInputs.valleyAngle) * Math.PI / 180;
@@ -298,120 +303,99 @@ const calculateSilo = () => {
   const t = parseFloat(siloInputs.thickness) / 1000;
   const steelDensity = 7850;
 
-  /* ====================================================
-        BINARY SEARCH TO FIND D1 (TOP DIAMETER)
-     ==================================================== */
-
+  /* =============================
+      FIND D1 BY BINARY SEARCH
+  ============================== */
   let low = D2 + 0.1;
-  let high = 20;
+  let high = 25;
   let D1 = low;
 
-  const heightDiff = (D1_try) => {
+  const totalVolumeForD1 = (D1_try) => {
     const R1 = D1_try / 2;
+    // const R2 = D2 / 2;
 
-    // Hopper height (correct full valley angle)
-    const Hh = (D1_try - D2) / (2 * Math.tan(theta));
+    /* HOPPER HEIGHT */
+    const Hh = (D1_try - D2) / (2 * Math.tan(theta / 2));
 
-    // Hopper volume
+    /* REPOSE HEIGHT */
+    const Hr = R1 * Math.tan(alpha);
+
+    /* CYLINDER HEIGHT */
+    const Hc = ratio * D1_try - Hr;
+
+    /* EMPTY HEIGHT */
+    const Hempty = Hc - Hr;
+
+    /* VOLUMES */
     const Vh =
       (Math.PI * Hh * (D1_try * D1_try + D1_try * D2 + D2 * D2)) / 12;
 
-    // Repose height
-    const Hr = R1 * Math.tan(alpha);
-
-    // Repose volume
     const Vr = (1 / 3) * Math.PI * R1 * R1 * Hr;
 
-    // Vertical height from ratio
-    const H_ratio = ratio * D1_try;
+    const Vc = Math.PI * R1 * R1 * Hc;
 
-    // Vertical height from volume
-    const H_volume = (Vt - Vh - Vr) / (Math.PI * R1 * R1);
+    const Vempty = Math.PI * R1 * R1 * Hempty;
 
-    // We want:  H_ratio == H_volume
-    return H_volume - H_ratio;  
+    /* TOTAL by your requirement */
+    return Vh + Vr + Vc + Vempty;
   };
 
-  // BINARY SEARCH
+  /* RUN BINARY SEARCH */
   for (let i = 0; i < 40; i++) {
-    const mid = (low + high) / 2;
-    const diff = heightDiff(mid);
+    let mid = (low + high) / 2;
+    let Vcalc = totalVolumeForD1(mid);
 
-    if (diff > 0) low = mid; 
-    else high = mid;
+    if (Vcalc > Vt) high = mid;
+    else low = mid;
 
     D1 = mid;
   }
 
-  /* ====================================================
-        FINAL CALCULATIONS (NOW D1 IS PERFECT)
-     ==================================================== */
-
+  /* FINAL CALCULATIONS */
   const R1 = D1 / 2;
   const R2 = D2 / 2;
 
-  // Hopper height
-  const Hh = (D1 - D2) / 2 * ( Math.tan(theta));
+  const Hh = (D1 - D2) / (2 * Math.tan(theta / 2));
+  const Hr = R1 * Math.tan(alpha);
+  const Hc = ratio * D1 - Hr;
+  const Hempty = Hc - Hr;
 
-  // Hopper volume
+  /* VOLUMES */
   const Vh =
     (Math.PI * Hh * (D1 * D1 + D1 * D2 + D2 * D2)) / 12;
 
-  // Repose height
-  const Hr = R1 * Math.tan(alpha);
-
-  // Repose volume
   const Vr = (1 / 3) * Math.PI * R1 * R1 * Hr;
+  const Vc = Math.PI * R1 * R1 * Hc;
+  const Vempty = Math.PI * R1 * R1 * Hempty;
 
-  // Vertical height (ratio)
-  const H_vertical_ratio = ratio * D1;
-
-  // Vertical height (volume-based)
-  const H_vertical_volume = (Vt - Vh - Vr) / (Math.PI * R1 * R1);
-
-  // Cylinder height
-  const H_cylinder = H_vertical_ratio - Hr;
-
-  // Cylinder volume
-  const Vc = Math.PI * R1 * R1 * H_cylinder;
-
-  // Total
-  const Vsum = Vh + Vr + Vc;
-
-const emptyVolume = Vt - (Vh + Vr + Vc);
-  // Total silo height
-  const totalHeight = Hh + H_vertical_ratio;
+  const totalHeight = Hh + Hc + Hr ;
 
   /* SURFACE AREA */
   const slant = Math.sqrt(Hh * Hh + (R1 - R2) ** 2);
-  const Atop = Math.PI * (D1*D1)*0.25;
   const Ahopper = Math.PI * (R1 + R2) * slant;
-  const Avertical = Math.PI * D1 * H_vertical_ratio;
+  const Avertical = Math.PI * D1 * (Hc + Hr);
   const A_total = Ahopper + Avertical;
 
   const plateWeight = A_total * t * steelDensity;
 
-  /* SAVE */
+  /* SAVE RESULTS */
   setSiloResults({
-  D1,
-  Hh,
-  Hr,
-  H_vertical_ratio,
-  H_vertical_volume,
-  H_cylinder,
-  ratio_actual: H_vertical_ratio / D1,
-  hopperVol: Vh,
-  reposeVol: Vr,
-  cylVol: Vc,
-  Vsum,
-  emptyVolume,   // ★ NEW
-  totalHeight,
-  Atop,
-  Ahopper,
-  Avertical,
-  A_total,
-  plateWeight
-});
+    D1,
+    Hh,
+    Hc,
+    Hr,
+    Hempty,
+    totalHeight,
+    hopperVol: Vh,
+    cylVol: Vc,
+    reposeVol: Vr,
+    Vempty,
+    Vsum: Vh + Vc + Vr + Vempty,
+    Avertical,
+    Ahopper,
+    A_total,
+    plateWeight,
+  });
 };
 
 
@@ -608,6 +592,7 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
   </button>
 
 </div>
+
 {/* CENTER — RESULTS */}
 {siloResults && (
   <div className="center">
@@ -615,11 +600,7 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
 
     <p>Top Diameter: {siloResults?.D1 ? siloResults.D1.toFixed(3) : "—"} m</p>
     <p>Hopper Height: {siloResults?.Hh ? siloResults.Hh.toFixed(3) : "—"} m</p>
-
-    {/* UPDATED */}
-    <p>Vertical Silo Height: {siloResults?.H_vertical_ratio ? siloResults.H_vertical_ratio.toFixed(3) : "—"} m</p>
-    <p>Cylinder Height (L/D): {siloResults?.H_cylinder ? siloResults.H_cylinder.toFixed(3) : "—"} m</p>
-
+    <p>Cylinder Height: {siloResults?.Hc ? siloResults.Hc.toFixed(3) : "—"} m</p>
     <p>Repose Height: {siloResults?.Hr ? siloResults.Hr.toFixed(3) : "—"} m</p>
     <p>Total Height: {siloResults?.totalHeight ? siloResults.totalHeight.toFixed(3) : "—"} m</p>
 
@@ -627,12 +608,11 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
     <p>Hopper Volume: {siloResults?.hopperVol ? siloResults.hopperVol.toFixed(3) : "—"} m³</p>
     <p>Repose Volume: {siloResults?.reposeVol ? siloResults.reposeVol.toFixed(3) : "—"} m³</p>
     <p>Cylinder Volume: {siloResults?.cylVol ? siloResults.cylVol.toFixed(3) : "—"} m³</p>
-    <p>Empty Volume: {siloResults?.emptyVolume ? siloResults.emptyVolume.toFixed(3) : "—"} m³</p>
 
     <h4>Surface Area</h4>
-    <p>Top Area: {siloResults?.Atop ? siloResults.Atop.toFixed(3) : "—"} m²</p>
-    <p>Vertical Area: {siloResults?.Avertical ? siloResults.Avertical.toFixed(3) : "—"} m²</p>
-    <p>Hopper Area: {siloResults?.Ahopper ? siloResults.Ahopper.toFixed(3) : "—"} m²</p>
+    <p>Top Area: {siloResults?.A_top ? siloResults.A_top.toFixed(3) : "—"} m²</p>
+    <p>Vertical Area: {siloResults?.A_vertical ? siloResults.A_vertical.toFixed(3) : "—"} m²</p>
+    <p>Hopper Area: {siloResults?.A_bottom ? siloResults.A_bottom.toFixed(3) : "—"} m²</p>
     <p>Total Surface Area: {siloResults?.A_total ? siloResults.A_total.toFixed(3) : "—"} m²</p>
 
     <h4>Plate Weight</h4>
@@ -643,13 +623,12 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
 
 
 
-
           {/* RIGHT — 3D SILO */}
           <div className="right">
             <Silo3D
-              topDia={parseFloat(siloInputs.D1) || 2}
+              topDia={parseFloat(siloInputs.topDia) || 2}
               Hh={siloResults?.Hh || 1}
-              Hc={siloResults?.H_cylinder || 2}
+              Hc={siloResults?.Hc || 2}
             />
           </div>
 

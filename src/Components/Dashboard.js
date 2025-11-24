@@ -81,21 +81,21 @@ const handleFileChange = async (e) => {
             { name: "Purchase Order History", path: "/purchaseorderhistory" },
              { name: "Advance/Percome Invoice/Redemption", path: "/advance" },
               { name: "Invoice Booking", path: "/paymentadvice" },
-              { name: "Invoice Booking History", path: "/certifypurchaseorder" },
+              { name: "Invoice Booking History", path: "/certifyinvoicebooking" },
               { name: "Reimbursement of Expenses", path: "/certifyreimbursement" },
               { name: "Reimbursement of Expense", path: "/reimbursement" },
             ]
           : []),
 
         ...(employeeId === "KCCES19014"
-          ? [{ name: "Invoice Bills", path: "/certifypurchaseorder" },
+          ? [{ name: "Invoice Bills", path: "/certifyinvoicebooking" },
           { name: "Reimbursement of Expenses", path: "/certifyreimbursement" },
-          { name: "Purchase Orders", path: "/purchaseorderhistory" },]
+          { name: "Purchase Orders", path: "/certifypurchaseorder" },]
           
           : []),
 
         ...(employeeId === "KCCES19002"
-          ? [{ name: "Invoice Bills", path: "/verifypurchaseorder" },
+              ? [{ name: "Invoice Bills", path: "/verifypurchaseorder" },
             { name: "Reimbursement of Expenses", path: "/verifyreimbursement" }]
           : []),
 
@@ -700,14 +700,9 @@ pieContainer: {
 
      
     </div>
-        
-
     </div>
     
   );
 };
 
 export default Dashboard;
-
-
-

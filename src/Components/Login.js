@@ -256,7 +256,6 @@ function Login() {
 >
   Silo Calculator
 </button>
-
             <Link to="/register" style={{ textDecoration: 'underline', color: '#0072ff', fontWeight: 'bold' }}>
               Create Account
             </Link>
@@ -268,7 +267,6 @@ function Login() {
 }
 
 export default Login;
-
 
 
 

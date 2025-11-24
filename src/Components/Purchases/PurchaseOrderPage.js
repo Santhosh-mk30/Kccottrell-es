@@ -140,13 +140,22 @@ const [selectedBranch, setSelectedBranch] = useState("");
     }, []);
 
  
-  // State to manage date and time
-  const [deliveryDate, setDeliveryDate] = useState('');
-  const [deliveryTime, setDeliveryTime] = useState('');
+// State to manage date and time
+const [deliveryDate, setDeliveryDate] = useState('');
+const [deliveryTime, setDeliveryTime] = useState('');
 
-  // Handle date and time change
-  const handleDateChange = (e) => setDeliveryDate(e.target.value);
-  const handleTimeChange = (e) => setDeliveryTime(e.target.value);
+// Handle date and time change
+const handleDateChange = (e) => setDeliveryDate(e.target.value);
+
+const handleTimeChange = (e) => {
+  const timeValue = e.target.value; // e.g. "14:30"
+  const [hours, minutes] = timeValue.split(":");
+  let hour = parseInt(hours);
+  const ampm = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12 || 12; // Convert to 12-hour format
+  const formattedTime = `${hour}:${minutes} ${ampm}`;
+  setDeliveryTime(formattedTime);
+};
 
 const handleSupplierChange = async (e) => {
   const value = e.target.value;
@@ -543,7 +552,9 @@ useEffect(() => {
   priceText: priceText || "",
   techText: techText || "",
   descriptionText: descriptionText || "", 
-   descriptionText1: descriptionText1 || "", 
+   descriptionText1: descriptionText1 || "",
+   delivery_date: deliveryDate || "",
+   delivery_time:deliveryTime ||"",
     descriptionText2: descriptionText2 || "",
     descriptionText3: descriptionText3 || "",
     descriptionText4: descriptionText4 || "",
@@ -965,8 +976,7 @@ function numberToWords(num) {
   </select>
 </div>
 
-
-{/* ✅ Display branch address field */}
+{/* 
 <div style={styles.fieldRow}>
   <label style={styles.label}>Branch Address</label>
   <input
@@ -979,7 +989,7 @@ function numberToWords(num) {
     }
     placeholder="Branch Address"
   />
-</div>
+</div> */}
 
 
 
@@ -1006,14 +1016,7 @@ function numberToWords(num) {
   }}>
           <div style={styles.header("#9b2bcf", "#d657d4")}>PURCHASE DETAILS</div>
           <div style={styles.body}>
-            <div style={styles.fieldRow}>
-              <label style={styles.label}>Order No.</label>
-              <input
-                style={styles.input}
-                value={formData.orderNo}
-                onChange={(e) => handleChange("orderNo", e.target.value)}
-              />
-            </div>
+           
             <div style={styles.fieldRow}>
               <label style={styles.label}>Date</label>
               <input
@@ -1610,23 +1613,23 @@ function numberToWords(num) {
         />
         
       ) : (
-        <div style={{ ...styles.descriptionText, }}>
-          {descriptionText1}
-           <input
-                type="date"
-                value={deliveryDate}
-                onChange={handleDateChange}
-                style={styles.input1}
-              />
- @ 
-              <input
-                type="time"
-                value={deliveryTime}
-                onChange={handleTimeChange}
-                style={styles.input1}
-              />
-.
-        </div>
+       <div style={{ ...styles.descriptionText }}>
+  {descriptionText1}
+  <input
+    type="date"
+    value={deliveryDate}
+    onChange={handleDateChange}
+    style={styles.input1}
+  />
+  @
+  <input
+    type="time"
+    onChange={handleTimeChange}
+    style={styles.input1}
+  />
+  .
+</div>
+
       )}
              
           </div>

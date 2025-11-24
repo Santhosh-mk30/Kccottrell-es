@@ -14,8 +14,8 @@ import SightAllowance from './Components/Trip Forms/SightAllowance';
 import LocalTravel from './Components/Trip Forms/LocalTravel';
 import VendorForm from './Components/Purchases/Vendors';
 import PaymentAdvicePage from './Components/Purchases/InvoiceBooking';
-import CertifyPurchaseOrder from './Components/Purchases/CertifyPurchaseorder';
-import VerifyPurchaseOrder from './Components/Purchases/VerifyPurchaseorder';
+import CertifyInvoicebooking from './Components/Purchases/CertifyInvoicebooking';
+import VerifyInvoicebooking from './Components/Purchases/VerifyInvoicebooking';
 import AdminPurchaseOrder from './Components/Purchases/AdminPurchaseorder';
 import VendorData from './Components/Purchases/Vendors History';
 import VendorOverview from './Components/Purchases/VendorsDetails';
@@ -24,7 +24,9 @@ import CertifyReimbursement from './Components/Purchases/CertifyReimbursement';
 import VerifyReimbursement from './Components/Purchases/VerifyReimbursement';
 import PurchaseOrderPage from './Components/Purchases/PurchaseOrderPage';
 import PurchaseOrderHistory from './Components/Purchases/PurchaseOrderHistory';
+import CertifyPurchaseOrder from './Components/Purchases/CertifyPurchaseOrders';
 import Silo from './Components/silo';
+
 
 function App() {
   return (
@@ -43,17 +45,19 @@ function App() {
    <Route path="/local-trip" element={<LocalTravel/>}/>
     <Route path="/vendors" element={<VendorForm/>}/>
      <Route path="/paymentadvice" element={<PaymentAdvicePage/>}/>
-     <Route path="/certifypurchaseorder" element={<CertifyPurchaseOrder/>}/>
-      <Route path="/verifypurchaseorder" element={<VerifyPurchaseOrder/>}/>
-      <Route path="/adminpurchaseorder" element={<AdminPurchaseOrder/>}/>
-      <Route path="/vendordata" element={<VendorData/>}/>
-      <Route path="/vendor/:vendorId" element={<VendorOverview />} />
-      <Route path="/reimbursement" element={<ReimbursementOfExpense/>} />
-      <Route path="/certifyreimbursement" element={<CertifyReimbursement/>} />
-      <Route path="/verifyreimbursement" element={<VerifyReimbursement/>} />
-      <Route path="/purchaseorder" element={<PurchaseOrderPage/>} />
-      <Route path="/purchaseorderhistory" element={<PurchaseOrderHistory/>} />
-  <Route path="/silo" element={<Silo/>} />
+<Route path="/certifyinvoicebooking" element={<CertifyInvoicebooking/>}/>
+<Route path="/verifypurchaseorder" element={<VerifyInvoicebooking/>}/>
+<Route path="/adminpurchaseorder" element={<AdminPurchaseOrder/>}/>
+<Route path="/vendordata" element={<VendorData/>}/>
+<Route path="/vendor/:vendorId" element={<VendorOverview />} />
+<Route path="/reimbursement" element={<ReimbursementOfExpense/>} />
+<Route path="/certifyreimbursement" element={<CertifyReimbursement/>} />
+<Route path="/verifyreimbursement" element={<VerifyReimbursement/>} />
+<Route path="/purchaseorder" element={<PurchaseOrderPage/>} />
+<Route path="/purchaseorderhistory" element={<PurchaseOrderHistory/>} />
+<Route path="/certifypurchaseorder" element={<CertifyPurchaseOrder/>} />
+<Route path="/silo" element={<Silo/>} />
+
       </Routes>
     </Router>
   );

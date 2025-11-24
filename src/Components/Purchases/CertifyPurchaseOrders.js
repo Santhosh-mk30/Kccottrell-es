@@ -91,9 +91,9 @@ const handlePrint = () => {
   const printContent = printRef.current.innerHTML;
   const printWindow = window.open("", "_blank", "width=900,height=650");
 
-  // ✅ Company info
+
   const companyName = "KC Cottrell Engineering Services Private Limited";
-  const logoPath = `${window.location.origin}/logologin.png`; // Adjust path if needed
+  const logoPath = `${window.location.origin}/logologin.png`; 
 
   printWindow.document.open();
   printWindow.document.write(`
@@ -260,12 +260,12 @@ const handlePrint = () => {
       <h4
   style={{
     marginBottom: 20,
-    fontSize: "18px", // 👈 Adjust as needed (e.g., 16px, 20px)
+    fontSize: "18px",
     fontWeight: "400",
     color: "#1a202c",
   }}
 >
-  Purchase Order History
+  Purchase Orders
 </h4>
 
 
@@ -761,35 +761,6 @@ const handlePrint = () => {
   </div>
 </div>
 
-
-
-     <div
-      style={{
-        padding: "16px 20px",
-        marginTop: "16px",
-        
-      }}
-    >
-      <p
-        style={{
-          fontWeight: "bold",
-          color: "#1a202c",
-          marginBottom: "8px",
-        }}
-      >
-      
-      </p>
-      <div
-        style={{
-          padding: "10px 14px",
-          minHeight: "60px",
-          color: "#333",
-          lineHeight: 1.6,
-        }}
-      >
-       
-      </div>
-    </div>
 <div
   style={{
     padding: "8px 10px 0px 10px", // 👈 bottom padding removed
@@ -1021,39 +992,11 @@ const handlePrint = () => {
 </div>
 </div>
 
-     <div
-      style={{
-        padding: "16px 20px",
-        marginTop: "16px",
-        
-      }}
-    >
-      <p
-        style={{
-          fontWeight: "bold",
-          color: "#1a202c",
-          marginBottom: "8px",
-        }}
-      >
-      
-      </p>
-      <div
-        style={{
-          padding: "10px 14px",
-          minHeight: "60px",
-          color: "#333",
-          lineHeight: 1.6,
-        }}
-      >
-       
-      </div>
-    </div>
-
 
 <div
   style={{
-    padding: "8px 10px 0px 10px", // 👈 bottom padding removed
-    marginTop: "0px", // 👈 no top margin at all
+    padding: "8px 10px 0px 10px",
+    marginTop: "0px", 
   }}
 >
 
@@ -1061,7 +1004,7 @@ const handlePrint = () => {
     style={{
       fontWeight: "bold",
       color: "#1a202c",
-      margin: "0 0 1px 0", // 👈 remove default top margin of <p>
+      margin: "0 0 1px 0", 
     }}
   >
     11. Packing,Identification & Markings:
@@ -1077,7 +1020,7 @@ const handlePrint = () => {
 >
   {detailedData.descriptionText10 || "No message provided."}
 </div>
-<p
+<p 
     style={{
       fontWeight: "bold",
       color: "#1a202c",
@@ -1226,36 +1169,6 @@ const handlePrint = () => {
   </div>
 
 </div>
-
-
-
-  <div
-      style={{
-        padding: "16px 20px",
-        marginTop: "16px",
-        
-      }}
-    >
-      <p
-        style={{
-          fontWeight: "bold",
-          color: "#1a202c",
-          marginBottom: "8px",
-        }}
-      >
-      
-      </p>
-      <div
-        style={{
-          padding: "10px 14px",
-          minHeight: "30px",
-          color: "#333",
-          lineHeight: 1.6,
-        }}
-      >
-       
-      </div>
-    </div>
 
 <div
   style={{
