@@ -618,7 +618,7 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
 
     {/* UPDATED */}
     <p>Vertical Silo Height: {siloResults?.H_vertical_ratio ? siloResults.H_vertical_ratio.toFixed(3) : "—"} m</p>
-    <p>Cylinder Height (L/D): {siloResults?.H_cylinder ? siloResults.H_cylinder.toFixed(3) : "—"} m</p>
+    <p>Cylinder Height: {siloResults?.H_cylinder ? siloResults.H_cylinder.toFixed(3) : "—"} m</p>
 
     <p>Repose Height: {siloResults?.Hr ? siloResults.Hr.toFixed(3) : "—"} m</p>
     <p>Total Height: {siloResults?.totalHeight ? siloResults.totalHeight.toFixed(3) : "—"} m</p>
@@ -659,3 +659,4 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
     </div>
   );
 }
+
