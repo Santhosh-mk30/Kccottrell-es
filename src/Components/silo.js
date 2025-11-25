@@ -1,40 +1,215 @@
+
 import React, { useState, useRef } from "react";
 
-/* =============================================================
-   3D SILO SHAPE MODEL
-============================================================= */
-function Silo3D({ topDia = 2, Hh = 1, Hc = 2 }) {
-  const cylHeight = Hc * 85;
-  const coneHeight = Hh * 85;
-  const cylWidth = topDia * 128;
+
+
+function Silo3D({ results }) {
+  if (!results) return null;
+
+  const topDia = results.D1;
+  const Hc = results.H_cylinder;
+  const Hh = results.Hh;
+  const Hr = results.Hr;
+
+  const cylVolume = results.cylVol;
+  const hopperVolume = results.hopperVol;
+  const totalVolume = results.Vt;
+  const emptyVolume = results.emptyVolume;
+  const reposeVolume = results.reposeVol;
+
+
+  const scaleH = 80;
+  const scaleW = 120;
+
+  const cylHeight = Hc * scaleH;
+  const hopperHeight = Hh * scaleH;
+  const cylWidth = topDia * scaleW;
 
   return (
-    <div style={{ textAlign: "center", marginTop: "10px" }}>
+    <div style={{ textAlign: "center", marginTop: 40, position: "relative" }}>
+
+      {/* TOP LABEL */}
+      <div style={{
+        fontSize: 16, fontWeight: "bold", marginBottom: 10
+      }}>
+        Top Diameter = {topDia.toFixed(3)} m
+      </div>
+
+      {/* ============= 3D DOME TOP ============= */}
+      <div style={{
+        width: cylWidth,
+        height: 20,
+        background: "linear-gradient(140deg, #eef1f5, #c3c9cf)",
+        borderRadius: "120px 120px 0 0",
+        margin: "0 auto",
+        border: "1px solid #888",
+        boxShadow: "0 0 14px rgba(0,0,0,0.3) inset"
+      }} />
+
+      {/* ============= CYLINDER (BIN) ============= */}
       <div
         style={{
           width: cylWidth,
           height: cylHeight,
-          background:
-            "linear-gradient(135deg, #cdd3d8 0%, #f5f7fa 40%, #b0b8c0 100%)",
-          border: "1px solid #888",
-          borderRadius: "22px 22px 0 0",
-          boxShadow: "0 0 18px rgba(0,0,0,0.25) inset",
+          background: "linear-gradient(135deg, #d7dce0, #f9fafb, #c1c7cc)",
+          border: "1px solid #777",
+          margin: "0 auto",
+          position: "relative",
         }}
-      ></div>
+      >
 
+        {/* BIN Label */}
+        <div style={{
+          position: "absolute",
+          left: "170px",
+          top: "60%",
+          transform: "translateY(-50%)",
+          fontWeight: "bold",
+          color: "#333",
+          textAlign: "left",
+          fontSize: 14,
+        }}>
+          BIN (Cylinder) <br/>
+          Height = {Hc.toFixed(3)} m<br/>
+          Volume = {cylVolume.toFixed(3)} m³
+        </div>
+
+<div
+  style={{
+    width: 0,
+    height: 0,
+
+ 
+    borderLeft: (cylWidth / 2) + "px solid transparent",
+    borderRight: (cylWidth / 2) + "px solid transparent",
+
+
+    borderBottom: (cylHeight * 0.40) + "px solid rgba(200,200,200,0.45)",
+
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
+  }}
+></div>
+
+ <div style={{
+          position: "absolute",
+          top: 35,
+          left: 5,
+          fontSize: 12,
+          fontWeight: "bold",
+          color: "#222"
+        }}>
+           Empty Volume  = {emptyVolume.toFixed(3)} m³
+        </div>
+
+
+        <div style={{
+          position: "absolute",
+          top: 75,
+          left: 155,
+          fontSize: 12,
+          fontWeight: "bold",
+          color: "#222"
+        }}>
+           Repose Height  = {Hr.toFixed(3)} m <br />
+           Repose Volume  = {reposeVolume.toFixed(3)} m³
+        </div>
+
+      </div>
+
+      {/* FLOW ANIMATION */}
+<div
+  style={{
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
+    top: 0,
+    width: 0,
+    height: 0,
+    borderLeft: (cylWidth / 2) + "px solid transparent",
+    borderRight: (cylWidth / 2) + "px solid transparent",
+    borderBottom: (cylHeight * 0.40) + "px solid rgba(255,255,255,0.1)",
+    overflow: "hidden",
+    pointerEvents: "none",
+  }}
+>
+  {/* FLOW PARTICLES */}
+  <div
+    style={{
+      position: "absolute",
+      top: -cylHeight,
+      left: -(cylWidth / 2) + 20,
+      width: cylWidth,
+      height: cylHeight * 2,
+      backgroundImage:
+        "repeating-linear-gradient(180deg, rgba(180,180,180,0.6) 0px, rgba(180,180,180,0.6) 2px, transparent 3px, transparent 6px)",
+      animation: "flowDown 2s linear infinite",
+      transform: "skewX(-20deg)",
+      opacity: 0.9,
+    }}
+  ></div>
+</div>
+
+
+      {/* ============= HOPPER (CONE) ============= */}
       <div
         style={{
           width: 0,
           height: 0,
           borderLeft: cylWidth / 2 + "px solid transparent",
           borderRight: cylWidth / 2 + "px solid transparent",
-          borderTop: coneHeight + "px solid #a8b0b8",
-          filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.3))",
+          borderTop: hopperHeight + "px solid #a8b0b8",
+          margin: "0 auto",
+          position: "relative",
+          filter: "drop-shadow(0 4px 5px rgba(0,0,0,0.2))"
         }}
-      ></div>
+      >
+      <div
+  style={{
+    position: "absolute",
+    right: "-85px",         
+    top: -170, 
+    transform: "translateY(-50%)",
+    fontWeight: "bold",
+    color: "#333",
+    fontSize: 14,
+    textAlign: "left",
+    lineHeight: 1.3,
+    whiteSpace: "nowrap",
+    zIndex: 9999,
+    pointerEvents: "none",
+  }}
+>
+  HOPPER <br />
+  Height = {Hh.toFixed(3)} m <br />
+  Volume = {hopperVolume.toFixed(3)} m³
+</div>
+
+       
+
+      </div>
+
+      {/* ============= FEEDER ============= */}
+      <div style={{
+        width: 32,
+        height: 32,
+        background: "radial-gradient(circle, #ddd, #999)",
+        borderRadius: "50%",
+        margin: "8px auto",
+        border: "2px solid #555",
+        position: "relative"
+      }} />
+
+      {/* BOTTOM LABELS */}
+      <div style={{ marginTop: 10, fontWeight: "bold", color: "#333" }}>
+        Total Volume = {totalVolume.toFixed(3)} m³
+      </div>
     </div>
   );
 }
+
+
 
 /* =============================================================
    REUSABLE INPUT ROW
@@ -287,6 +462,9 @@ export default function SiloFlowPage() {
 
   setFlowResults({ F1, F2, F3, F4, F5, F6 });
 };
+
+
+
 const calculateSilo = () => {
   const Vt = parseFloat(siloInputs.totalVolume);   // total volume
   const D2 = parseFloat(siloInputs.bottomDia);     // bottom diameter
@@ -378,7 +556,20 @@ const calculateSilo = () => {
   // Total
   const Vsum = Vh + Vr + Vc;
 
+  
+
 const emptyVolume = Vt - (Vh + Vr + Vc);
+
+const Totalvolume = Vt + emptyVolume;
+
+const remainVol = Totalvolume - Vh;
+
+const verticalsilo = remainVol / ((Math.PI / 4) * (D1 * D1));
+
+
+const totalh = verticalsilo + Hh;
+
+
   // Total silo height
   const totalHeight = Hh + H_vertical_ratio;
 
@@ -391,11 +582,20 @@ const emptyVolume = Vt - (Vh + Vr + Vc);
 
   const plateWeight = A_total * t * steelDensity;
 
+   const slant1 = Math.sqrt(Hh * Hh + (R1 - R2) ** 2);
+  const Atop1 = Math.PI * (D1*D1)*0.25;
+  const Ahopper1 = Math.PI * (R1 + R2) * slant1;
+  const Avertical1 = Math.PI * D1 * verticalsilo;
+  const A_total1 = Ahopper1 + Avertical1 + Atop1;
+
+  const plateWeight1 = A_total1 * t * 7.85;
+
   /* SAVE */
   setSiloResults({
   D1,
   Hh,
   Hr,
+  Vt,
   H_vertical_ratio,
   H_vertical_volume,
   H_cylinder,
@@ -404,26 +604,31 @@ const emptyVolume = Vt - (Vh + Vr + Vc);
   reposeVol: Vr,
   cylVol: Vc,
   Vsum,
-  emptyVolume,   // ★ NEW
+  emptyVolume,
   totalHeight,
+  Totalvolume,
   Atop,
   Ahopper,
   Avertical,
   A_total,
-  plateWeight
+  plateWeight,
+  remainVol,
+  verticalsilo,
+  totalh,
+  Atop1,
+  Ahopper1,
+  Avertical1,
+  A_total1,
+  plateWeight1,
 });
 };
 
 
 
-
-
   return (
     <div style={styles.page}>
-
-      {/* RESPONSIVE CSS */}
       <style>
-        {`
+        {`  
           .row { display: flex; gap: 15px; align-items: flex-start; }
 
           @media (min-width: 992px) {
@@ -517,29 +722,52 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
             <button style={styles.button} onClick={calculateFlow}>Calculate Flow</button>
           </div>
 
-          {/* RIGHT */}
-          {flowResults && (
-  <div className="center">
-    <h3>Flow Results</h3>
+ {flowResults && (
+  <>
+    <style>{`
+      @keyframes fadeSlide {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
 
-    <p>
-      Flow/Sec = {flowResults.F1.toFixed(3)}{" "}
-      {flowInputs.flowUnit === "Am³/hr" ? "Am³/sec" : "Nm³/sec"}
-    </p>
+      @keyframes fadeWord {
+        0% { opacity: 0; transform: translateY(10px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+    `}</style>
 
-    <p>Gm/Sec = {flowResults.F2.toFixed(3)} Gm/sec</p>
-    <p>Kg/Sec = {flowResults.F3.toFixed(3)} Kg/sec</p>
-    <p>Kg/Hr = {flowResults.F4.toFixed(3)} Kg/hr</p>
+    <div className="center" style={{ animation: "fadeSlide 0.6s ease-out" }}>
 
-    <p>
-      m³/Hr = {flowResults.F5.toFixed(3)} m³/Hr
-    </p>
+      {/* Title animation */}
+      <h3>
+        {"Flow Results".split(" ").map((word, i) => (
+          <span
+            key={i}
+            style={{
+              opacity: 0,
+              animation: `fadeWord 0.5s ease forwards`,
+              animationDelay: `${i * 0.25}s`,
+              display: "inline-block",
+              marginRight: "6px",
+            }}
+          >
+            {word}
+          </span>
+        ))}
+      </h3>
 
-    <p>
-      Volume = {flowResults.F6.toFixed(3)} m³
-    </p>
-  </div>
+      <p>Flow/Sec = {flowResults?.F1?.toFixed(3)} {flowInputs.flowUnit === "Am³/hr" ? "Am³/sec" : "Nm³/sec"}</p>
+      <p>Gm/Sec = {flowResults?.F2?.toFixed(3)} Gm/sec</p>
+      <p>Kg/Sec = {flowResults?.F3?.toFixed(3)} Kg/sec</p>
+      <p>Kg/Hr = {flowResults?.F4?.toFixed(3)} Kg/hr</p>
+      <p>m³/Hr = {flowResults?.F5?.toFixed(3)} m³/Hr</p>
+      <p>Volume = {flowResults?.F6?.toFixed(3)} m³</p>
+
+    </div>
+  </>
 )}
+
+
 
 
         </div>
@@ -608,36 +836,221 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
   </button>
 
 </div>
-{/* CENTER — RESULTS */}
+
 {siloResults && (
-  <div className="center">
-    <h3>Silo Dimensions</h3>
+  <>
+    <style>{`
+      @keyframes fadeWord {
+        0% { opacity: 0; transform: translateY(10px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+    `}</style>
 
-    <p>Top Diameter: {siloResults?.D1 ? siloResults.D1.toFixed(3) : "—"} m</p>
-    <p>Hopper Height: {siloResults?.Hh ? siloResults.Hh.toFixed(3) : "—"} m</p>
+    <div className="center">
 
-    {/* UPDATED */}
-    <p>Vertical Silo Height: {siloResults?.H_vertical_ratio ? siloResults.H_vertical_ratio.toFixed(3) : "—"} m</p>
-    <p>Cylinder Height: {siloResults?.H_cylinder ? siloResults.H_cylinder.toFixed(3) : "—"} m</p>
+      {/* Title with word-by-word animation */}
+      <h3>
+        {"Silo Dimensions".split(" ").map((w, i) => (
+          <span
+            key={i}
+            style={{
+              opacity: 0,
+              animation: `fadeWord 0.5s ease forwards`,
+              animationDelay: `${i * 0.2}s`,
+              display: "inline-block",
+              marginRight: "6px"
+            }}
+          >
+            {w}
+          </span>
+        ))}
+      </h3>
 
-    <p>Repose Height: {siloResults?.Hr ? siloResults.Hr.toFixed(3) : "—"} m</p>
-    <p>Total Height: {siloResults?.totalHeight ? siloResults.totalHeight.toFixed(3) : "—"} m</p>
+      {/* ALL LINES WITH AUTOMATIC DELAY */}
+      {[
+        `Top Diameter: ${siloResults?.D1?.toFixed(3) ?? "—"} m`,
+        `Hopper Height: ${siloResults?.Hh?.toFixed(3) ?? "—"} m`,
+        `Vertical Silo Height: ${siloResults?.H_vertical_ratio?.toFixed(3) ?? "—"} m`,
+        `Cylinder Height: ${siloResults?.H_cylinder?.toFixed(3) ?? "—"} m`,
+        `Repose Height: ${siloResults?.Hr?.toFixed(3) ?? "—"} m`,
+        `Total Height: ${siloResults?.totalHeight?.toFixed(3) ?? "—"} m`,
+      ].map((text, i) => (
+        <p
+          key={i}
+          style={{
+            opacity: 0,
+            animation: `fadeWord 0.6s ease forwards`,
+            animationDelay: `${1 + i * 0.25}s`
+          }}
+        >
+          {text}
+        </p>
+      ))}
 
-    <h4>Volumes</h4>
-    <p>Hopper Volume: {siloResults?.hopperVol ? siloResults.hopperVol.toFixed(3) : "—"} m³</p>
-    <p>Repose Volume: {siloResults?.reposeVol ? siloResults.reposeVol.toFixed(3) : "—"} m³</p>
-    <p>Cylinder Volume: {siloResults?.cylVol ? siloResults.cylVol.toFixed(3) : "—"} m³</p>
-    <p>Empty Volume: {siloResults?.emptyVolume ? siloResults.emptyVolume.toFixed(3) : "—"} m³</p>
+      {/* SECOND TITLE */}
+      <h4
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.5s ease forwards`,
+          animationDelay: `2s`
+        }}
+      >
+        Volumes
+      </h4>
 
-    <h4>Surface Area</h4>
-    <p>Top Area: {siloResults?.Atop ? siloResults.Atop.toFixed(3) : "—"} m²</p>
-    <p>Vertical Area: {siloResults?.Avertical ? siloResults.Avertical.toFixed(3) : "—"} m²</p>
-    <p>Hopper Area: {siloResults?.Ahopper ? siloResults.Ahopper.toFixed(3) : "—"} m²</p>
-    <p>Total Surface Area: {siloResults?.A_total ? siloResults.A_total.toFixed(3) : "—"} m²</p>
+      {[
+        `Hopper Volume: ${siloResults?.hopperVol?.toFixed(3) ?? "—"} m³`,
+        `Repose Volume: ${siloResults?.reposeVol?.toFixed(3) ?? "—"} m³`,
+        `Cylinder Volume: ${siloResults?.cylVol?.toFixed(3) ?? "—"} m³`,
+        `Empty Volume: ${siloResults?.emptyVolume?.toFixed(3) ?? "—"} m³`,
+      ].map((text, i) => (
+        <p
+          key={i}
+          style={{
+            opacity: 0,
+            animation: `fadeWord 0.6s ease forwards`,
+            animationDelay: `${2.2 + i * 0.25}s`
+          }}
+        >
+          {text}
+        </p>
+      ))}
 
-    <h4>Plate Weight</h4>
-    <p>Total Plate Weight: {siloResults?.plateWeight ? siloResults.plateWeight.toFixed(2) : "—"} kg</p>
-  </div>
+      {/* THIRD TITLE */}
+      <h4
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.5s ease forwards`,
+          animationDelay: `3.4s`
+        }}
+      >
+        Surface Area
+      </h4>
+
+      {[
+        `Top Area: ${siloResults?.Atop?.toFixed(3) ?? "—"} m²`,
+        `Vertical Area: ${siloResults?.Avertical?.toFixed(3) ?? "—"} m²`,
+        `Hopper Area: ${siloResults?.Ahopper?.toFixed(3) ?? "—"} m²`,
+        `Total Surface Area: ${siloResults?.A_total?.toFixed(3) ?? "—"} m²`,
+      ].map((text, i) => (
+        <p
+          key={i}
+          style={{
+            opacity: 0,
+            animation: `fadeWord 0.6s ease forwards`,
+            animationDelay: `${3.6 + i * 0.25}s`
+          }}
+        >
+          {text}
+        </p>
+      ))}
+
+      {/* FOURTH TITLE */}
+      <h4
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.5s ease forwards`,
+          animationDelay: `4.8s`
+        }}
+      >
+        Plate Weight
+      </h4>
+
+      <p
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.6s ease forwards`,
+          animationDelay: `5s`
+        }}
+      >
+        Total Plate Weight: {siloResults?.plateWeight?.toFixed(2) ?? "—"} kg
+      </p>
+
+       <h3>
+        {"Silo Dimensions".split(" ").map((w, i) => (
+          <span
+            key={i}
+            style={{
+              opacity: 0,
+              animation: `fadeWord 0.5s ease forwards`,
+              animationDelay: `${i * 0.2}s`,
+              display: "inline-block",
+              marginRight: "6px"
+            }}
+          >
+            {w}
+          </span>
+        ))}
+      </h3>
+
+      {/* ALL LINES WITH AUTOMATIC DELAY */}
+      {[
+        `Vertical Silo Height: ${siloResults?.verticalsilo?.toFixed(3) ?? "—"} m`,
+        `Total Height: ${siloResults?.totalh?.toFixed(3) ?? "—"} m`,
+      ].map((text, i) => (
+        <p
+          key={i}
+          style={{
+            opacity: 0,
+            animation: `fadeWord 0.6s ease forwards`,
+            animationDelay: `${1 + i * 0.25}s`
+          }}
+        >
+          {text}
+        </p>
+      ))}
+
+ {/* THIRD TITLE */}
+      <h4
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.5s ease forwards`,
+          animationDelay: `3.4s`
+        }}
+      >
+        Surface Area
+      </h4>
+
+      {[
+        `Top Area: ${siloResults?.Atop1?.toFixed(3) ?? "—"} m²`,
+        `Vertical Area: ${siloResults?.Avertical1?.toFixed(3) ?? "—"} m²`,
+        `Hopper Area: ${siloResults?.Ahopper1?.toFixed(3) ?? "—"} m²`,
+        `Total Surface Area: ${siloResults?.A_total1?.toFixed(3) ?? "—"} m²`,
+      ].map((text, i) => (
+        <p
+          key={i}
+          style={{
+            opacity: 0,
+            animation: `fadeWord 0.6s ease forwards`,
+            animationDelay: `${3.6 + i * 0.25}s`
+          }}
+        >
+          {text}
+        </p>
+      ))}
+
+      {/* FOURTH TITLE */}
+      <h4
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.5s ease forwards`,
+          animationDelay: `4.8s`
+        }}
+      >
+        Plate Weight
+      </h4>
+
+      <p
+        style={{
+          opacity: 0,
+          animation: `fadeWord 0.6s ease forwards`,
+          animationDelay: `5s`
+        }}
+      >
+        Total Plate Weight: {siloResults?.plateWeight1?.toFixed(2) ?? "—"} Tones
+      </p>
+    </div>
+  </>
 )}
 
 
@@ -646,11 +1059,7 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
 
           {/* RIGHT — 3D SILO */}
           <div className="right">
-            <Silo3D
-              topDia={parseFloat(siloInputs.D1) || 2}
-              Hh={siloResults?.Hh || 1}
-              Hc={siloResults?.H_cylinder || 2}
-            />
+             <Silo3D results={siloResults} />
           </div>
 
           
@@ -659,5 +1068,3 @@ onSelectChange={(e) => handleFlowUnitChange(e.target.value)}
     </div>
   );
 }
-
-
