@@ -28,6 +28,31 @@ function Silo3D({ results }) {
   return (
     <div style={{ textAlign: "center", marginTop: 40, position: "relative" }}>
 
+        {/* ===== KEYFRAMES INSERTED HERE ===== */}
+<style>
+{`
+  ${Array.from({ length: 20 })
+    .map((_, i) => {
+      const startX = (Math.random() - 0.5) * 30;       // narrow triangle top
+      const midX   = (Math.random() - 0.5) * 140;      // widen inside cylinder
+      const endX   = (Math.random() - 0.5) * 220;      // maximum spread bottom
+
+      return `
+        @keyframes fallFull${i} {
+          0%   { transform: translate(${startX}px, 0px) scale(0.3); opacity: 0.2; }
+          20%  { transform: translate(${midX}px, 80px) scale(0.6); opacity: 0.7; }
+          70%  { transform: translate(${midX}px, 160px) scale(0.9); opacity: 1; }
+          100% { transform: translate(${endX}px, 280px) scale(1.2); opacity: 2; }
+        }
+      `;
+    })
+    .join("\n")}
+`}
+</style>
+
+
+
+
       {/* TOP LABEL */}
       <div style={{
         fontSize: 16, fontWeight: "bold", marginBottom: 10
@@ -45,18 +70,53 @@ function Silo3D({ results }) {
         border: "1px solid #888",
         boxShadow: "0 0 14px rgba(0,0,0,0.3) inset"
       }} />
+{/* TRIANGLE → CYLINDER FULL WIDTH PARTICLE FLOW */}
+<div
+  style={{
+    position: "absolute",
+    top: "-10px",
+    left: "50%",
+    width: cylWidth,
+    height: cylHeight,
+    transform: "translateX(-50%)",
+    pointerEvents: "none",
+    overflow: "visible",
+    zIndex: 10,
+  }}
+>
+  {Array.from({ length: 20 }).map((_, i) => (
+    <div
+      key={i}
+      style={{
+        position: "absolute",
+        top: 10,
+        left: "50%",
+        width: 12,
+        height: 8,
+        background: "rgba(50, 63, 179, 0.95)",
+        borderRadius: "50%",
+        animation: `fallFull${i} 1.9s linear infinite`,
+        animationDelay: `${i * 0.15}s`,
+      }}
+    ></div>
+  ))}
+</div>
+
+
 
       {/* ============= CYLINDER (BIN) ============= */}
-      <div
-        style={{
-          width: cylWidth,
-          height: cylHeight,
-          background: "linear-gradient(135deg, #d7dce0, #f9fafb, #c1c7cc)",
-          border: "1px solid #777",
-          margin: "0 auto",
-          position: "relative",
-        }}
-      >
+     <div
+  style={{
+    width: cylWidth,
+    height: cylHeight,
+    background: "transparent",
+    border: "1px solid #777",
+    margin: "0 auto",
+    position: "relative",
+  }}
+>
+
+
 
         {/* BIN Label */}
         <div style={{
@@ -78,20 +138,34 @@ function Silo3D({ results }) {
   style={{
     width: 0,
     height: 0,
-
- 
     borderLeft: (cylWidth / 2) + "px solid transparent",
     borderRight: (cylWidth / 2) + "px solid transparent",
-
-
     borderBottom: (cylHeight * 0.40) + "px solid rgba(200,200,200,0.45)",
-
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)",
   }}
 ></div>
+ {/* ========== THICK HOPPER → CYLINDER FLOW ANIMATION ========== */}
+<div
+  style={{
+    position: "absolute",
+    bottom: "-5px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: cylWidth * 0.75,      // WIDER flow
+    height: cylHeight,
+    overflow: "hidden",
+    pointerEvents: "none",
+    opacity: 0.9,
+    zIndex: 4,
+  }}
+>
 
+  
+</div>
+
+        
  <div style={{
           position: "absolute",
           top: 35,
@@ -152,51 +226,72 @@ function Silo3D({ results }) {
 </div>
 
 
-      {/* ============= HOPPER (CONE) ============= */}
-      <div
-        style={{
-          width: 0,
-          height: 0,
-          borderLeft: cylWidth / 2 + "px solid transparent",
-          borderRight: cylWidth / 2 + "px solid transparent",
-          borderTop: hopperHeight + "px solid #a8b0b8",
-          margin: "0 auto",
-          position: "relative",
-          filter: "drop-shadow(0 4px 5px rgba(0,0,0,0.2))"
-        }}
-      >
-      <div
-  style={{
-    position: "absolute",
-    right: "-85px",         
-    top: -170, 
-    transform: "translateY(-50%)",
-    fontWeight: "bold",
-    color: "#333",
-    fontSize: 14,
-    textAlign: "left",
-    lineHeight: 1.3,
-    whiteSpace: "nowrap",
-    zIndex: 9999,
-    pointerEvents: "none",
-  }}
->
-  HOPPER <br />
-  Height = {Hh.toFixed(3)} m <br />
-  Volume = {hopperVolume.toFixed(3)} m³
+ <div style={{
+  position: "relative",
+  width: cylWidth,
+  height: hopperHeight,
+  margin: "0 auto",
+}}>
+  {/* Left border line */}
+  <div
+    style={{
+      position: "absolute",
+      left: 0,
+      top: 0,
+      width: 0,
+      height: hopperHeight,
+      borderLeft: "2px solid #121314ff",
+      transform: "skewX(45deg)",
+      transformOrigin: "top",
+    }}
+  />
+
+  {/* Right border line */}
+  <div
+    style={{
+      position: "absolute",
+      right: 0,
+      top: 0,
+      width: 0,
+      height: hopperHeight,
+      borderRight: "2px solid #1e2022ff",
+      transform: "skewX(-45deg)",
+      transformOrigin: "top",
+    }}
+  />
+
+
+  {/* Hopper Label */}
+  <div
+    style={{
+      position: "absolute",
+      right: "-90px",     // adjust distance from hopper
+      top: hopperHeight / 2 - 20, // perfect centering
+      fontWeight: "bold",
+      color: "#333",
+      fontSize: 14,
+      textAlign: "left",
+      lineHeight: 1.3,
+      whiteSpace: "nowrap",
+      pointerEvents: "none",
+      zIndex: 10,
+    }}
+  >
+    HOPPER <br />
+    Height = {Hh.toFixed(3)} m <br />
+    Volume = {hopperVolume.toFixed(3)} m³
+  </div>
 </div>
 
-       
-
-      </div>
 
       {/* ============= FEEDER ============= */}
       <div style={{
         width: 32,
         height: 32,
-        background: "radial-gradient(circle, #ddd, #999)",
+        background: "#ffffffff",
         borderRadius: "50%",
         margin: "8px auto",
+        bottom: "25px",
         border: "2px solid #555",
         position: "relative"
       }} />
