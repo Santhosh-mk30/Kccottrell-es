@@ -1,0 +1,331 @@
+/* src/Components/Login.css */
+
+.login-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  padding: 40px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  animation: fadeIn 1s ease-out;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+}
+
+.login-logo-container {
+  margin-bottom: 20px;
+  animation: slideDown 0.8s ease-out;
+}
+
+.login-logo {
+  width: 300px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.login-heading {
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
+  animation: slideUp 0.8s ease-out 0.2s backwards;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Input Group & Floating Labels */
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+  animation: slideUp 0.8s ease-out 0.4s backwards;
+  text-align: left;
+}
+
+.login-input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.login-input:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #0072ff;
+  box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.1);
+}
+
+.input-label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  background: transparent;
+  padding: 0 5px;
+}
+
+/* Floating effect when focused or has value */
+.login-input:focus+.input-label,
+.login-input:not(:placeholder-shown)+.input-label {
+  top: 0;
+  font-size: 0.85rem;
+  color: #0072ff;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Password Toggle */
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle:hover {
+  color: #0072ff;
+}
+
+/* Password Strength Meter */
+.password-strength-bar {
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-weak {
+  width: 33%;
+  background-color: #e74c3c;
+}
+
+.strength-medium {
+  width: 66%;
+  background-color: #f39c12;
+}
+
+.strength-strong {
+  width: 100%;
+  background-color: #27ae60;
+}
+
+.welcome-message {
+  color: #0072ff;
+  font-weight: 600;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.login-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+  animation: slideUp 0.8s ease-out 0.6s backwards;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 114, 255, 0.4);
+  background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+}
+
+.login-button:active {
+  transform: scale(0.98);
+}
+
+.error-message {
+  margin-top: 15px;
+  color: #e74c3c;
+  font-weight: 600;
+  background: rgba(231, 76, 60, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  animation: shake 0.5s ease-in-out;
+}
+
+.success-message {
+  margin-top: 15px;
+  color: #27ae60;
+  font-weight: 600;
+  background: rgba(39, 174, 96, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.register-link {
+  margin-top: 25px;
+  color: #2c3e50;
+  font-size: 0.95rem;
+  animation: fadeIn 1s ease-out 0.8s backwards;
+}
+
+.silo-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(221, 36, 118, 0.3);
+}
+
+.silo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(221, 36, 118, 0.4);
+}
+
+.create-account-link {
+  color: #0072ff;
+  text-decoration: none;
+  font-weight: 800;
+  margin-left: 5px;
+  position: relative;
+}
+
+.create-account-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #0072ff;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.create-account-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
