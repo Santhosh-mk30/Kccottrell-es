@@ -1,0 +1,253 @@
+.converter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.converter-modal {
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+}
+
+.converter-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e04a4a;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.converter-close:hover {
+    background: #c93a3a;
+    transform: rotate(90deg) scale(1.1);
+}
+
+.converter-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.converter-subtitle {
+    font-size: 14px;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.converter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.file-upload-area {
+    position: relative;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    border: 3px dashed #e04a4a;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #fafafa, #ffffff);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    border-color: #c93a3a;
+    background: linear-gradient(145deg, #fff5f5, #ffffff);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(224, 74, 74, 0.2);
+}
+
+.upload-icon {
+    width: 50px;
+    height: 50px;
+    color: #e04a4a;
+    margin-bottom: 15px;
+}
+
+.file-label-text {
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: 500;
+    text-align: center;
+}
+
+.converter-message {
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+.converter-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.converter-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.converter-message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.convert-button {
+    background: linear-gradient(135deg, #e04a4a, #c93a3a);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(224, 74, 74, 0.3);
+}
+
+.convert-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(224, 74, 74, 0.4);
+}
+
+.convert-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.convert-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.converter-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #e04a4a;
+}
+
+.converter-info p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #495057;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .converter-modal {
+        padding: 30px 20px;
+        width: 95%;
+    }
+
+    .converter-title {
+        font-size: 24px;
+    }
+
+    .file-label {
+        padding: 30px 15px;
+    }
+
+    .upload-icon {
+        width: 40px;
+        height: 40px;
+    }
+}

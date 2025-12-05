@@ -1,0 +1,212 @@
+/* Dashboard Professional Animations & Responsive Styles */
+
+/* ========================================
+   KEYFRAME ANIMATIONS
+   ======================================== */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide In From Left */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide In From Right */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide In From Top */
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Shimmer Effect */
+@keyframes shimmerMove {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Staggered Fade In */
+@keyframes staggeredFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   ANIMATION CLASSES
+   ======================================== */
+
+.dashboard-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.id-card-animated {
+    animation: slideInLeft 0.8s ease-out;
+    animation-fill-mode: both;
+}
+
+.attendance-card-animated {
+    animation: slideInRight 0.8s ease-out 0.2s;
+    animation-fill-mode: both;
+}
+
+.top-nav-animated {
+    animation: slideInFromTop 0.5s ease-out;
+}
+
+.side-nav-animated {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.menu-item-1 {
+    animation: staggeredFadeIn 0.4s ease-out 0.1s;
+    animation-fill-mode: both;
+}
+
+.menu-item-2 {
+    animation: staggeredFadeIn 0.4s ease-out 0.2s;
+    animation-fill-mode: both;
+}
+
+.menu-item-3 {
+    animation: staggeredFadeIn 0.4s ease-out 0.3s;
+    animation-fill-mode: both;
+}
+
+/* Tablet Styles (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .id-card-tablet {
+        width: 90%;
+        margin: 70px auto 20px;
+    }
+
+    .attendance-card-tablet {
+        width: 90%;
+        margin: 20px auto;
+    }
+}
+
+/* Mobile Styles (< 768px) */
+@media (max-width: 767px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .id-card-mobile {
+        width: 95%;
+        margin: 70px auto 15px;
+        padding: 15px;
+    }
+
+    .attendance-card-mobile {
+        width: 95%;
+        margin: 15px auto;
+        padding: 15px;
+    }
+
+    .side-nav-mobile {
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Small Mobile Styles (< 480px) */
+@media (max-width: 480px) {
+    .id-card-small {
+        width: 100%;
+        margin: 65px 10px 10px;
+        padding: 12px;
+    }
+
+    .attendance-card-small {
+        width: 100%;
+        margin: 10px;
+        padding: 12px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus visible for keyboard navigation */
+.focus-visible:focus {
+    outline: 2px solid #e04a4a;
+    outline-offset: 2px;
+}

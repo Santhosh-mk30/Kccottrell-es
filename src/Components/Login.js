@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Preloader from './Preloader';
+import WordToExcelConverter from './WordToExcelConverter';
 import './Login.css';
 
 function Login() {
@@ -10,6 +11,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showConverter, setShowConverter] = useState(false);
   const navigate = useNavigate();
 
   const handleEmployeeChange = async (e) => {
@@ -41,7 +43,7 @@ function Login() {
 
     try {
       const form = new FormData();
-      form.append("employee_id", employee_id.toUpperCase()); // always send in CAPS
+      form.append("employee_id", employee_id.toUpperCase());
       form.append("password", password);
 
       const response = await axios.post(
@@ -53,8 +55,7 @@ function Login() {
       setLoading(false);
 
       if (data.success) {
-        // ✅ Store employee ID and other info in localStorage
-        localStorage.setItem("employee_id", employee_id.toUpperCase()); // save in CAPS
+        localStorage.setItem("employee_id", employee_id.toUpperCase());
         localStorage.setItem("designation", data.designation);
         localStorage.setItem("name", data.name);
 
@@ -74,48 +75,9 @@ function Login() {
     }
   };
 
-
-
-
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     const form = new FormData();
-  //     form.append("employee_id", employee_id);
-  //     form.append("password", password);
-
-  //     const response = await axios.post(
-  //       'https://darkslategrey-shrew-424102.hostingersite.com/api/login.php',
-  //       form
-  //     );
-
-  //     const data = response.data;
-  //     setLoading(false);
-
-  //     if (data.success) {
-  //       const role = data.role.toLowerCase();
-  //       if (role === 'ceo') navigate('/approval');
-  //       else if (role === 'manager') navigate('/certification');
-  //       else if (role === 'employee') navigate('/dashboard');
-  //       else if (role === 'admin') navigate('/admin');
-  //       else alert('Unknown role');
-  //     } else {
-  //       setMessage(data.message || 'Invalid credentials');
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setMessage('Login failed. Please try again.');
-  //     setLoading(false);
-  //   }
-  // };
-
-
   return (
     <>
       {loading && <Preloader />}
-      {/* 🔥 Video Background */}
       <video autoPlay loop muted playsInline className="video-background">
         <source src="/videos/background2.mp4" type="video/mp4" />
         <source src="/videos/background.webm" type="video/webm" />
@@ -176,19 +138,22 @@ function Login() {
             >
               Silo Calculator
             </button>
+
+            <button
+              onClick={() => setShowConverter(true)}
+              className="converter-btn"
+            >
+              📄 Converter
+            </button>
           </div>
         </div>
       </div>
+
+      {showConverter && (
+        <WordToExcelConverter onClose={() => setShowConverter(false)} />
+      )}
     </>
   );
 }
 
 export default Login;
-
-
-
-
-
-
-
-

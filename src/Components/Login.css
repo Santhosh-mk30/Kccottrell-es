@@ -226,35 +226,6 @@
 
 .register-link {
   margin-top: 25px;
-  color: #2c3e50;
-  font-size: 0.95rem;
-  animation: fadeIn 1s ease-out 0.8s backwards;
-}
-
-.silo-btn {
-  margin-top: 15px;
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(221, 36, 118, 0.3);
-}
-
-.silo-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(221, 36, 118, 0.4);
-}
-
-.create-account-link {
-  color: #0072ff;
-  text-decoration: none;
-  font-weight: 800;
   margin-left: 5px;
   position: relative;
 }
