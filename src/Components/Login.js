@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Preloader from './Preloader';
 import WordToExcelConverter from './WordToExcelConverter';
+import PDFMerger from './PDFMerger';
 import './Login.css';
 
 function Login() {
@@ -12,6 +13,7 @@ function Login() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [showConverter, setShowConverter] = useState(false);
+  const [showPDFMerger, setShowPDFMerger] = useState(false);
   const navigate = useNavigate();
 
   const handleEmployeeChange = async (e) => {
@@ -143,7 +145,14 @@ function Login() {
               onClick={() => setShowConverter(true)}
               className="converter-btn"
             >
-              📄 Converter
+               Word to Excel
+            </button>
+
+            <button
+              onClick={() => setShowPDFMerger(true)}
+              className="pdf-merger-btn"
+            >
+               Merge PDFs
             </button>
           </div>
         </div>
@@ -151,6 +160,10 @@ function Login() {
 
       {showConverter && (
         <WordToExcelConverter onClose={() => setShowConverter(false)} />
+      )}
+
+      {showPDFMerger && (
+        <PDFMerger onClose={() => setShowPDFMerger(false)} />
       )}
     </>
   );

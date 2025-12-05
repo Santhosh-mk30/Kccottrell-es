@@ -33,9 +33,14 @@ function WordToExcelConverter({ onClose }) {
         try {
             const arrayBuffer = await file.arrayBuffer();
 
-            // Extract text from Word document using mammoth
-            const result = await mammoth.extractRawText({ arrayBuffer });
-            const text = result.value;
+            // Extract both raw text and HTML from Word document
+            const [textResult, htmlResult] = await Promise.all([
+                mammoth.extractRawText({ arrayBuffer }),
+                mammoth.convertToHtml({ arrayBuffer })
+            ]);
+
+            const text = textResult.value;
+            const html = htmlResult.value;
 
             if (!text || text.trim() === '') {
                 setMessage('❌ No content found in the document');
@@ -43,39 +48,92 @@ function WordToExcelConverter({ onClose }) {
                 return;
             }
 
-            // Split text into lines
-            const lines = text.split('\n').filter(line => line.trim() !== '');
+            let excelData = [];
 
-            // Create Excel data - each line becomes a row
-            const excelData = [];
+            // Try to detect and extract tables from HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const tables = doc.querySelectorAll('table');
 
-            lines.forEach(line => {
-                // Try to detect if line has multiple columns (separated by tabs, commas, or multiple spaces)
-                if (line.includes('\t')) {
-                    // Tab-separated
-                    excelData.push(line.split('\t').map(cell => cell.trim()));
-                } else if (line.includes(',') && line.split(',').length > 2) {
-                    // Comma-separated (likely CSV-like)
-                    excelData.push(line.split(',').map(cell => cell.trim()));
-                } else if (line.match(/\s{2,}/)) {
-                    // Multiple spaces
-                    excelData.push(line.split(/\s{2,}/).map(cell => cell.trim()));
-                } else {
-                    // Single column
-                    excelData.push([line.trim()]);
-                }
-            });
+            if (tables.length > 0) {
+                // Document has tables - extract table data
+                tables.forEach((table, tableIndex) => {
+                    if (tableIndex > 0) {
+                        // Add empty row between tables
+                        excelData.push([]);
+                    }
+
+                    const rows = table.querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td, th');
+                        const rowData = Array.from(cells).map(cell => cell.textContent.trim());
+                        if (rowData.some(cell => cell !== '')) {
+                            excelData.push(rowData);
+                        }
+                    });
+                });
+            } else {
+                // No tables - parse text content
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+
+                lines.forEach(line => {
+                    const trimmedLine = line.trim();
+
+                    // Detect different separators
+                    if (trimmedLine.includes('\t')) {
+                        // Tab-separated
+                        excelData.push(trimmedLine.split('\t').map(cell => cell.trim()));
+                    } else if (trimmedLine.match(/\s{3,}/)) {
+                        // Multiple spaces (3 or more)
+                        excelData.push(trimmedLine.split(/\s{3,}/).map(cell => cell.trim()));
+                    } else if (trimmedLine.includes('|')) {
+                        // Pipe-separated
+                        excelData.push(trimmedLine.split('|').map(cell => cell.trim()).filter(cell => cell !== ''));
+                    } else if (trimmedLine.match(/,\s+/)) {
+                        // Comma with space (likely CSV-like)
+                        const parts = trimmedLine.split(/,\s+/);
+                        if (parts.length > 1) {
+                            excelData.push(parts.map(cell => cell.trim()));
+                        } else {
+                            excelData.push([trimmedLine]);
+                        }
+                    } else if (trimmedLine.includes(':')) {
+                        // Key-value pairs (e.g., "Name: John")
+                        const parts = trimmedLine.split(':');
+                        if (parts.length === 2) {
+                            excelData.push([parts[0].trim(), parts[1].trim()]);
+                        } else {
+                            excelData.push([trimmedLine]);
+                        }
+                    } else {
+                        // Single column
+                        excelData.push([trimmedLine]);
+                    }
+                });
+            }
+
+            if (excelData.length === 0) {
+                setMessage('❌ No data could be extracted from the document');
+                setConverting(false);
+                return;
+            }
 
             // Create workbook and worksheet
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(excelData);
 
-            // Auto-size columns
-            const maxWidth = excelData.reduce((max, row) => {
-                return Math.max(max, ...row.map(cell => String(cell).length));
-            }, 10);
+            // Auto-size columns based on content
+            const colWidths = [];
+            excelData.forEach(row => {
+                row.forEach((cell, colIndex) => {
+                    const cellLength = String(cell).length;
+                    if (!colWidths[colIndex] || cellLength > colWidths[colIndex]) {
+                        colWidths[colIndex] = cellLength;
+                    }
+                });
+            });
 
-            ws['!cols'] = [{ wch: Math.min(maxWidth, 50) }];
+            ws['!cols'] = colWidths.map(width => ({ wch: Math.min(Math.max(width + 2, 10), 50) }));
 
             // Add worksheet to workbook
             XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
@@ -151,8 +209,9 @@ function WordToExcelConverter({ onClose }) {
                     </button>
 
                     <div className="converter-info">
-                        <p>ℹ️ Supported formats: .doc, .docx</p>
-                        <p>📊 Output format: .xlsx (Excel)</p>
+                        <p>ℹ️ Supports: .doc, .docx with tables</p>
+                        <p>📊 Output: .xlsx (Excel)</p>
+                        <p>✨ Auto-detects tables & formatting</p>
                     </div>
                 </div>
             </div>
