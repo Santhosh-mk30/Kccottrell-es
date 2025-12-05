@@ -1,13 +1,71 @@
 import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import * as pdfjsLib from 'pdfjs-dist';
 import './PDFMerger.css';
+
+// Set worker source for PDF.js
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 function PDFMerger({ onClose }) {
     const [files, setFiles] = useState([]);
     const [merging, setMerging] = useState(false);
     const [message, setMessage] = useState('');
+    const [previews, setPreviews] = useState([]);
+    const [draggedIndex, setDraggedIndex] = useState(null);
 
-    const handleFileChange = (e) => {
+    const generatePreview = async (file, index) => {
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+            const pageCount = pdfDoc.getPageCount();
+
+            // Generate thumbnail using PDF.js
+            let thumbnailUrl = null;
+            try {
+                const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+                const pdf = await loadingTask.promise;
+                const page = await pdf.getPage(1);
+
+                const scale = 0.5;
+                const viewport = page.getViewport({ scale });
+
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise;
+
+                thumbnailUrl = canvas.toDataURL();
+            } catch (err) {
+                console.log('Thumbnail generation failed:', err);
+            }
+
+            return {
+                id: `file-${index}-${Date.now()}`,
+                file: file,
+                name: file.name,
+                pageCount: pageCount,
+                index: index,
+                thumbnail: thumbnailUrl
+            };
+        } catch (error) {
+            console.error('Preview generation error:', error);
+            return {
+                id: `file-${index}-${Date.now()}`,
+                file: file,
+                name: file.name,
+                pageCount: 0,
+                index: index,
+                thumbnail: null
+            };
+        }
+    };
+
+    const handleFileChange = async (e) => {
         const selectedFiles = Array.from(e.target.files);
         const pdfFiles = selectedFiles.filter(file =>
             file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
@@ -23,8 +81,35 @@ function PDFMerger({ onClose }) {
             return;
         }
 
+        setMessage('Loading previews...');
+
+        const previewPromises = pdfFiles.map((file, index) => generatePreview(file, index));
+        const generatedPreviews = await Promise.all(previewPromises);
+
         setFiles(pdfFiles);
+        setPreviews(generatedPreviews);
         setMessage('');
+    };
+
+    const handleDragStart = (index) => {
+        setDraggedIndex(index);
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = (dropIndex) => {
+        if (draggedIndex === null) return;
+
+        const items = Array.from(previews);
+        const [draggedItem] = items.splice(draggedIndex, 1);
+        items.splice(dropIndex, 0, draggedItem);
+
+        setPreviews(items);
+        const reorderedFiles = items.map(preview => preview.file);
+        setFiles(reorderedFiles);
+        setDraggedIndex(null);
     };
 
     const mergePDFs = async () => {
@@ -37,21 +122,16 @@ function PDFMerger({ onClose }) {
         setMessage('Merging PDFs...');
 
         try {
-            // Create a new PDF document
             const mergedPdf = await PDFDocument.create();
 
-            // Loop through each file and add its pages to the merged PDF
-            for (const file of files) {
-                const arrayBuffer = await file.arrayBuffer();
+            for (const preview of previews) {
+                const arrayBuffer = await preview.file.arrayBuffer();
                 const pdf = await PDFDocument.load(arrayBuffer);
                 const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
                 copiedPages.forEach((page) => mergedPdf.addPage(page));
             }
 
-            // Serialize the merged PDF to bytes
             const mergedPdfBytes = await mergedPdf.save();
-
-            // Create a blob and download
             const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -63,6 +143,7 @@ function PDFMerger({ onClose }) {
             setMessage('✅ PDFs merged successfully! File downloaded.');
             setTimeout(() => {
                 setFiles([]);
+                setPreviews([]);
                 setMessage('');
             }, 3000);
         } catch (error) {
@@ -73,9 +154,13 @@ function PDFMerger({ onClose }) {
         }
     };
 
-    const removeFile = (index) => {
-        const newFiles = files.filter((_, i) => i !== index);
+    const removeFile = (id) => {
+        const newPreviews = previews.filter(preview => preview.id !== id);
+        const newFiles = newPreviews.map(preview => preview.file);
+
+        setPreviews(newPreviews);
         setFiles(newFiles);
+
         if (newFiles.length < 2) {
             setMessage('Please select at least 2 PDF files to merge');
         }
@@ -87,7 +172,7 @@ function PDFMerger({ onClose }) {
                 <button className="pdf-close" onClick={onClose}>×</button>
 
                 <h2 className="pdf-title">PDF Merger</h2>
-                <p className="pdf-subtitle">Merge multiple PDF files into one</p>
+                <p className="pdf-subtitle">Merge multiple PDF files - Drag to reorder</p>
 
                 <div className="pdf-content">
                     <div className="file-upload-area">
@@ -109,21 +194,50 @@ function PDFMerger({ onClose }) {
                         </label>
                     </div>
 
-                    {files.length > 0 && (
-                        <div className="file-list">
-                            <h4>Selected Files ({files.length}):</h4>
-                            {files.map((file, index) => (
-                                <div key={index} className="file-item">
-                                    <span className="file-name">📄 {file.name}</span>
-                                    <button
-                                        className="remove-btn"
-                                        onClick={() => removeFile(index)}
-                                        title="Remove file"
+                    {previews.length > 0 && (
+                        <div className="preview-container">
+                            <h4 className="preview-heading">📄 Drag to reorder files:</h4>
+                            <div className="file-list-draggable">
+                                {previews.map((preview, index) => (
+                                    <div
+                                        key={preview.id}
+                                        draggable
+                                        onDragStart={() => handleDragStart(index)}
+                                        onDragOver={handleDragOver}
+                                        onDrop={() => handleDrop(index)}
+                                        className={`file-item-preview ${draggedIndex === index ? 'dragging' : ''}`}
                                     >
-                                        ×
-                                    </button>
-                                </div>
-                            ))}
+                                        <div className="file-preview-content">
+                                            <div className="drag-handle">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M9 3h2v2H9V3zm0 4h2v2H9V7zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-16h2v2h-2V3zm0 4h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                                                </svg>
+                                            </div>
+                                            {preview.thumbnail ? (
+                                                <img
+                                                    src={preview.thumbnail}
+                                                    alt="PDF Preview"
+                                                    className="file-thumbnail"
+                                                />
+                                            ) : (
+                                                <div className="file-icon">📄</div>
+                                            )}
+                                            <div className="file-details">
+                                                <span className="file-name-preview">{preview.name}</span>
+                                                <span className="file-pages">{preview.pageCount} page{preview.pageCount !== 1 ? 's' : ''}</span>
+                                            </div>
+                                            <div className="file-order">#{index + 1}</div>
+                                            <button
+                                                className="remove-btn-preview"
+                                                onClick={() => removeFile(preview.id)}
+                                                title="Remove file"
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 
@@ -155,7 +269,8 @@ function PDFMerger({ onClose }) {
 
                     <div className="pdf-info">
                         <p>ℹ️ Select multiple PDF files to merge</p>
-                        <p>📑 Files will be merged in the order selected</p>
+                        <p>🔄 Drag files to change merge order</p>
+                        <p>📑 Files will be merged in displayed order</p>
                     </div>
                 </div>
             </div>
